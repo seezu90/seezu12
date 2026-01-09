@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber-Love Protocol 2.0</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-pink: #ff007f;
+            --neon-purple: #bc13fe;
+            --bg-dark: #050505;
+        }
+
+        body {
+            margin: 0; padding: 0; background: var(--bg-dark);
+            height: 100vh; display: flex; justify-content: center; align-items: center;
+            font-family: 'Rajdhani', sans-serif; overflow: hidden; color: var(--neon-blue);
+        }
+
+        /* --- Background Matrix Effect --- */
+        #bg-canvas { position: absolute; top: 0; left: 0; z-index: -1; opacity: 0.2; }
+
+        #app-container { width: 90%; max-width: 380px; perspective: 1000px; }
+
+        /* --- Cyber Card Styles --- */
+        .card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--neon-blue);
+            padding: 30px; border-radius: 0 40px 0 40px;
+            box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+            text-align: center; transition: all 0.5s ease;
+            position: relative; overflow: hidden;
+        }
+
+        /* Different Card Looks */
+        .style1 { border-color: var(--neon-pink); box-shadow: 0 0 20px var(--neon-pink); border-radius: 40px 0; }
+        .style2 { border-color: var(--neon-purple); border-style: dashed; }
+        .style3 { clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); border-radius: 0; }
+
+        /* --- Typing Effect with Glitch --- */
+        .typing-area {
+            font-family: 'Orbitron', sans-serif; font-size: 18px;
+            min-height: 100px; margin-bottom: 25px; letter-spacing: 1px;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        .char { display: inline-block; opacity: 0; animation: flash 0.1s forwards; }
+        @keyframes flash { 0% { opacity: 0; color: #fff; } 100% { opacity: 1; } }
+
+        /* --- Cyber Buttons --- */
+        .btn-wrapper { display: flex; flex-direction: column; gap: 12px; opacity: 0; transition: 0.5s; }
+        .btn {
+            background: transparent; border: 1px solid var(--neon-blue);
+            color: var(--neon-blue); padding: 14px; border-radius: 5px;
+            cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 12px;
+            text-transform: uppercase; transition: 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .btn:hover {
+            background: var(--neon-blue); color: #000;
+            box-shadow: 0 0 20px var(--neon-blue); transform: scale(1.05);
+        }
+
+        /* --- Final Celebration --- */
+        .finale-title { font-size: 32px; color: var(--neon-pink); text-shadow: 0 0 15px var(--neon-pink); animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        /* --- Scrollable Report --- */
+        .report { text-align: left; font-size: 14px; max-height: 300px; overflow-y: auto; padding: 10px; border: 1px solid var(--neon-blue); margin-top: 15px; }
+        .report b { color: var(--neon-pink); }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div id="app-container">
+        <div id="card" class="card">
+            <div id="typing-area" class="typing-area"></div>
+            <div id="btn-wrapper" class="btn-wrapper"></div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix Background Script
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const chars = "01LOVEHAPPYBIRTHDAY01";
+        const fontSize = 15;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0ff";
+            ctx.font = fontSize + "px Orbitron";
+            drops.forEach((y, i) => {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, y * fontSize);
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
+        }
+        setInterval(drawMatrix, 50);
+
+        // Journey Data
+        const journey = [
+            { q: "SYSTEM SCAN: Identifying Target... Is this the World's Cutest Girl?", a: ["ACCESS GRANTED ✅", "SCANNING... 😉"] },
+            { q: "WARNING: High levels of Beauty detected. Continue mission?", a: ["CONTINUE 🔥", "STAY SAFE! 🙈"] },
+            { q: "QUERY: Why do you live in my mainframe without paying rent?", a: ["I own this place! 👸", "Love is free ❤️"] },
+            { q: "DATA DETECTED: You have the most addictive smile in the galaxy.", a: ["UPLOAD THANKS ✨", "SYSTEM OVERLOAD 🫦"] },
+            { q: "COMMAND: Initiate 1000 Hugs Protocol. Permission?", a: ["EXECUTE NOW! 🤗", "WAITING... ⏳"] },
+            { q: "ERROR: Heart rate increasing... Is it because of you?", a: ["SYSTEM ERROR ❤️", "YES, ALWAYS!"] },
+            { q: "REQUEST: Will you stay in my server forever?", a: ["LIFETIME ACCESS", "UNLIMITED DATA ✅"] },
+            { q: "QUERY: Is the cake sweet or are you the source of sweetness?", a: ["IT'S ME! 💋", "DATA INCOMPLETE 😂"] },
+            { q: "FINAL PHASE: Are you ready for the Birthday Surprise?", a: ["INITIALIZE! 😍", "GO GO GO!"] },
+            { q: "COUNTDOWN STARTING: 3.. 2.. 1.. UNLOCKING SURPRISE...", a: ["OPEN! 🎉", "REVEAL! ✨"] }
+        ];
+
+        let step = 0; let userLog = [];
+
+        function typeEffect(text, cb) {
+            const area = document.getElementById('typing-area');
+            const wrapper = document.getElementById('btn-wrapper');
+            area.innerHTML = ""; wrapper.style.opacity = "0";
+            
+            text.split("").forEach((c, i) => {
+                const span = document.createElement('span');
+                span.innerText = c;
+                span.className = "char";
+                span.style.animationDelay = (i * 0.03) + "s";
+                area.appendChild(span);
+            });
+
+            setTimeout(() => { wrapper.style.opacity = "1"; if(cb) cb(); }, text.length * 30 + 300);
+        }
+
+        function loadStep() {
+            const card = document.getElementById('card');
+            const wrapper = document.getElementById('btn-wrapper');
+            
+            // Cycle Styles
+            const styles = ["", "style1", "style2", "style3"];
+            card.className = "card " + styles[step % 4];
+
+            wrapper.innerHTML = "";
+            typeEffect(journey[step].q, () => {
+                journey[step].a.forEach(ans => {
+                    const btn = document.createElement('button');
+                    btn.className = "btn"; btn.innerText = ans;
+                    btn.onclick = () => {
+                        userLog.push({q: journey[step].q, a: ans});
+                        step++;
+                        if (step < journey.length) loadStep();
+                        else showCelebration();
+                    };
+                    wrapper.appendChild(btn);
+                });
+            });
+        }
+
+        function showCelebration() {
+            const card = document.getElementById('card');
+            card.innerHTML = `
+                <div class="finale-title">HAPPY BIRTHDAY! 🎂</div>
+                <p style="color:white; letter-spacing:1px;">YOU ARE THE CENTER OF MY UNIVERSE. ❤️</p>
+                <button class="btn" style="border-color:var(--neon-pink); color:var(--neon-pink);" onclick="showReport()">GENERATE LOGS 📜</button>
+            `;
+        }
+
+        function showReport() {
+            const card = document.getElementById('card-container');
+            let html = `<div style="text-shadow: 0 0 10px var(--neon-blue);">📸 SCREENSHOT LOGS</div><div class="report">`;
+            userLog.forEach((item, i) => {
+                html += `<b>${i+1}.</b> ${item.q}<br><span style="color:var(--neon-blue)">> ${item.a}</span><br><br>`;
+            });
+            html += `</div><button class="btn" style="width:100%; margin-top:10px;" onclick="location.reload()">REBOOT SYSTEM 🔄</button>`;
+            document.getElementById('card').innerHTML = html;
+        }
+
+        loadStep();
+    </script>
+</body>
+</html>
